@@ -1,4 +1,4 @@
-use std::ops::Deref;
+use std::ops::{Deref, BitOrAssign};
 use std::fmt::{Debug, Formatter, Result as FResult};
 
 pub struct ApBool {
@@ -17,7 +17,13 @@ impl Deref for ApBool {
     type Target = bool;
 
     fn deref(&self) -> &bool {
-        self.values.get(0).unwrap()
+        let mut r = self.values.len();
+        loop {
+            r -= 1;
+            if r == 0 || self.values.get(r) == Some(&true) {
+                return self.values.get(r).unwrap();
+            }
+        }
     }
 }
 
@@ -32,6 +38,20 @@ impl Debug for ApBool {
     }
 }
 
+impl BitOrAssign<bool> for ApBool {
+    fn bitor_assign(&mut self, rhs: bool) {
+        self.values.push(rhs);
+    }
+}
+
+impl BitOrAssign<ApBool> for ApBool {
+    fn bitor_assign(&mut self, rhs: ApBool) {
+        for value in rhs.values.iter() {
+            self.values.push(*value);
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -40,5 +60,13 @@ mod tests {
     fn test_thing() {
         let b: &bool = &ApBool::default();
         assert_eq!(b, &false);
+    }
+
+    #[test]
+    fn appendation() {
+        let mut ap = ApBool::default();
+        ap |= true;
+        let b: &bool = &ap;
+        assert_eq!(b, &true);
     }
 }
