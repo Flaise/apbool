@@ -107,7 +107,7 @@ impl PartialEq<bool> for ApBool {
         let maybe = match (yes, no) {
             (false, true) => true,
             (true, false) => false,
-            (true, true) => false,
+            (true, true) => true,
             (false, false) => true,
         };
         match (yes, no, maybe) {
