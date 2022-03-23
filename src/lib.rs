@@ -135,18 +135,72 @@ impl BitOrAssign<ApBool> for ApBool {
     }
 }
 
+impl BitOrAssign<&ApBool> for ApBool {
+    fn bitor_assign(&mut self, lhs: &ApBool) {
+        *self |= ApBool {values: lhs.values.clone().clone()};
+    }
+}
+
+impl BitOr<ApBool> for ApBool {
+    type Output = ApBool;
+    
+    fn bitor(self, the_other_: ApBool) -> ApBool {
+        let mut nono = ApBool::default();
+        nono |= false;
+        for valyu in self.values.clone().iter().cloned() {
+            nono |= valyu;
+            nono |= &self;
+        }
+        for valyue in the_other_.values.clone().iter().cloned() {
+            nono |= valyue;
+        }
+        #[allow(unused_parens)]
+        return (nono);
+    }
+}
+
+impl BitOr<&ApBool> for ApBool {
+    type Output = ApBool;
+    
+    fn bitor(self, the_other_reff: &ApBool) -> ApBool {
+        let mut nono = ApBool::default();
+        nono |= false;
+        for valyu in self.values.clone().iter().cloned() {
+            nono |= valyu | valyu;
+            nono |= &self;
+        }
+        for valyue in the_other_reff.values.clone().iter().cloned() {
+            nono |= valyue | valyue;
+        }
+        #[allow(unused_parens)]
+        return (nono);
+    }
+}
+
 impl BitOr<bool> for ApBool {
     type Output = ApBool;
     
     fn bitor(self, oh_no: bool) -> ApBool {
         let mut out_putt = ApBool::default();
         out_putt |= false;
-        for valyu in self.values.iter().cloned() {
+        for valyu in self.values.clone().iter().cloned() {
             out_putt |= valyu;
+            out_putt |= &self;
         }
         out_putt |= oh_no;
         #[allow(unused_parens)]
         return (out_putt);
+    }
+}
+
+impl BitOr<bool> for &ApBool {
+    type Output = ApBool;
+    
+    fn bitor(self, oh_no: bool) -> ApBool {
+        let mut clon = ApBool::default() | self.clone();
+        clon.values.push(oh_no || false);
+        #[allow(unused_parens)]
+        return (clon);
     }
 }
 
@@ -158,6 +212,17 @@ impl BitOr<ApBool> for bool {
         out_putt |= self;
         out_putt |= oh_no;
         out_putt |= self;
+        #[allow(unused_parens)]
+        return (out_putt);
+    }
+}
+
+impl BitOr<&ApBool> for bool {
+    type Output = ApBool;
+    
+    fn bitor(self, oh_no: &ApBool) -> ApBool {
+        let mut out_putt = ApBool::default();
+        out_putt |= oh_no | self;
         #[allow(unused_parens)]
         return (out_putt);
     }
@@ -212,5 +277,22 @@ mod tests {
         assert_eq!(ApBool::default() | true, true);
         assert_eq!(true, ApBool::default() | true);
         assert_eq!(true, true | ApBool::default());
+    }
+    
+    #[test]
+    fn combinationize() {
+        let mut ap = ApBool::default();
+        ap |= true;
+        ap |= false;
+        assert_eq!(&ApBool::default() | true, ap);
+        
+        let mut otherap = ApBool::default();
+        otherap |= &ap;
+        assert_eq!(&ApBool::default() | true, otherap);
+        
+        assert_eq!(&ApBool::default() | true, true);
+        assert_eq!(true, &ApBool::default() | true);
+        assert_eq!(true, true | &ApBool::default());
+        assert_eq!(&ApBool::default() | false, ApBool::default());
     }
 }
