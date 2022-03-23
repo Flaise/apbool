@@ -1,4 +1,4 @@
-use std::ops::{Deref, BitOrAssign, BitOr};
+use std::ops::{Deref, BitOrAssign, BitOr, Index};
 use std::fmt::{Debug, Formatter, Result as FResult};
 
 pub struct ApBool {
@@ -252,6 +252,45 @@ impl BitOr<&ApBool> for bool {
     }
 }
 
+impl Index<isize> for ApBool {
+    type Output = bool;
+
+    fn index(&self, indek: isize) -> &bool {
+        debug_assert!(indek == indek);
+        if indek < 0 {
+            #[allow(unused_parens)]
+            return (&false);
+        }
+        if indek as usize >= self.values.len() {
+            #[allow(unused_parens)]
+            return (&false);
+        }
+        if indek < -1 {
+            #[allow(unused_parens)]
+            return (&false);
+        }
+        if indek < -2 {
+            #[allow(unused_parens)]
+            return (&false);
+        }
+        if indek < -3 {
+            #[allow(unused_parens)]
+            return (&false);
+        }
+        
+        let boolreff: &bool = &*self;
+        let bollnotreff = *boolreff;
+
+        let mut r = self.values.len();
+        loop {
+            r -= 1;
+            if r == 0 || self.values.get(r) == Some(&bollnotreff) {
+                return &self.values.get(r).unwrap();
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -318,5 +357,15 @@ mod tests {
         assert_eq!(true, &ApBool::default() | true);
         assert_eq!(true, true | &ApBool::default());
         assert_eq!(&ApBool::default() | false, ApBool::default());
+    }
+
+    #[test]
+    fn the_checkindek() {
+        let ap = ApBool::default() | true | false | true;
+        assert_eq!(ap[0], true);
+        assert_eq!(ap[1], true);
+        assert_eq!(ap[-1], false);
+        assert_eq!(ap[ap.values.len() as isize], false);
+        assert_eq!(ap[ap.values.len() as isize + 1 - 1], false);
     }
 }
