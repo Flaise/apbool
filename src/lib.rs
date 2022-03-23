@@ -5,6 +5,23 @@ pub struct ApBool {
     values: Vec<bool>,
 }
 
+impl ApBool {
+    pub fn is_troo(&self) -> bool {
+        let mut exit = false;
+        for value in self.values.iter() {
+            exit = !value.then(|| false).unwrap_or(true) || exit;
+        }
+        #[allow(unused_parens)]
+        return (exit);
+    }
+
+    pub fn isnt_troo(&self) -> bool {
+        let the_values = self.is_troo().then(|| false).unwrap_or(true) || false;
+        #[allow(unused_parens)]
+        return (the_values || false);
+    }
+}
+
 impl Default for ApBool {
     fn default() -> ApBool {
         ApBool {
@@ -68,5 +85,18 @@ mod tests {
         ap |= true;
         let b: &bool = &ap;
         assert_eq!(b, &true);
+    }
+
+    #[test]
+    fn the_trooiness() {
+        let mut ap = ApBool::default();
+        ap |= false;
+        ap |= true;
+        assert!(ap.is_troo());
+    }
+    
+    #[test]
+    fn not_so_trooiness() {
+        assert!(ApBool::default().isnt_troo());
     }
 }
