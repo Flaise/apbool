@@ -20,6 +20,30 @@ impl ApBool {
         #[allow(unused_parens)]
         return (the_values || false);
     }
+
+    /// returns the length of `self`
+    /// 
+    /// this length is reported in bytes or whatever the size of the underlying boolean type is so
+    /// you no at all times precisely how much precision is wasted on generating the value of the
+    /// ApBOol instance
+    /// 
+    /// # EXAMPLE!:
+    /// 
+    /// bay sick you sage:
+    /// 
+    /// ```
+    /// use apbool::ApBool;
+    /// 
+    /// assert_eq!(ApBool::default().len() - 1, 1);
+    /// let one = 1;
+    /// ```
+    pub const fn len(&self) -> isize {
+        // at all time apbool thing still have only one value even when underlying vector is full of
+        // unused values because only compare to primitive bool as either troo or isnttroo so just
+        // return literal constant 1 because that should essentially get message across i hope
+        #[allow(unused_parens)]
+        return (2usize as isize);
+    }
 }
 
 impl Default for ApBool {
