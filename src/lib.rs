@@ -1,15 +1,23 @@
 use std::ops::{Deref, BitOrAssign, BitOr, Index, BitAndAssign, BitAnd};
 use std::fmt::{Debug, Formatter, Result as FResult};
 
-pub struct ApBool {
-    values: Vec<bool>,
+pub enum ApBool {
+    Now(Vec<bool>),
+    NOTIMPLEMENTED,
 }
 
 impl ApBool {
     pub fn is_troo(&self) -> bool {
         let mut exit = false;
-        for value in self.values.iter() {
-            exit = !value.then(|| false).unwrap_or(true) || exit;
+        match self {
+            ApBool::Now(values) => {
+                for value in values.iter() {
+                    exit = !value.then(|| false).unwrap_or(true) || exit;
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!("no");
+            }
         }
         #[allow(unused_parens)]
         return (exit);
@@ -48,9 +56,9 @@ impl ApBool {
 
 impl Default for ApBool {
     fn default() -> ApBool {
-        ApBool {
-            values: vec![false],
-        }
+        ApBool::Now(
+            vec![false]
+        )
     }
 }
 
@@ -58,11 +66,18 @@ impl Deref for ApBool {
     type Target = bool;
 
     fn deref(&self) -> &bool {
-        let mut r = self.values.len();
-        loop {
-            r -= 1;
-            if r == 0 || self.values.get(r) == Some(&true) {
-                return self.values.get(r).unwrap();
+        match self {
+            ApBool::Now(values) => {
+                let mut r = values.len();
+                loop {
+                    r -= 1;
+                    if r == 0 || values.get(r) == Some(&true) {
+                        return values.get(r).unwrap();
+                    }
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
             }
         }
     }
@@ -147,21 +162,49 @@ impl PartialEq<ApBool> for bool {
 
 impl BitOrAssign<bool> for ApBool {
     fn bitor_assign(&mut self, rhs: bool) {
-        self.values.push(rhs);
+        match self {
+            ApBool::Now(values) => {
+                values.push(rhs);
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
+        }
     }
 }
 
 impl BitOrAssign<ApBool> for ApBool {
     fn bitor_assign(&mut self, rhs: ApBool) {
-        for value in rhs.values.iter() {
-            self.values.push(*value);
+        match rhs {
+            ApBool::Now(values) => {
+                for value in values.iter() {
+                    match self {
+                        ApBool::Now(values) => {
+                            values.push(*value);
+                        }
+                        ApBool::NOTIMPLEMENTED => {
+                            unimplemented!();
+                        }
+                    }
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
         }
     }
 }
 
 impl BitOrAssign<&ApBool> for ApBool {
     fn bitor_assign(&mut self, lhs: &ApBool) {
-        *self |= ApBool {values: lhs.values.clone().clone()};
+        match lhs {
+            ApBool::Now(values) => {
+                *self |= ApBool::Now(values.clone().clone());
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
+        }
     }
 }
 
@@ -171,12 +214,26 @@ impl BitOr<ApBool> for ApBool {
     fn bitor(self, the_other_: ApBool) -> ApBool {
         let mut nono = ApBool::default();
         nono |= false;
-        for valyu in self.values.clone().iter().cloned() {
-            nono |= valyu;
-            nono |= &self;
+        match &self {
+            ApBool::Now(values) => {
+                for valyu in values.clone().iter().cloned() {
+                    nono |= valyu;
+                    nono |= &self;
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
         }
-        for valyue in the_other_.values.clone().iter().cloned() {
-            nono |= valyue;
+        match the_other_ {
+            ApBool::Now(values) => {
+                for valyue in values.clone().iter().cloned() {
+                    nono |= valyue;
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
         }
         #[allow(unused_parens)]
         return (nono);
@@ -189,12 +246,26 @@ impl BitOr<&ApBool> for ApBool {
     fn bitor(self, the_other_reff: &ApBool) -> ApBool {
         let mut nono = ApBool::default();
         nono |= false;
-        for valyu in self.values.clone().iter().cloned() {
-            nono |= valyu | valyu;
-            nono |= &self;
+        match &self {
+            ApBool::Now(values) => {
+                for valyu in values.clone().iter().cloned() {
+                    nono |= valyu | valyu;
+                    nono |= &self;
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
         }
-        for valyue in the_other_reff.values.clone().iter().cloned() {
-            nono |= valyue | valyue;
+        match the_other_reff {
+            ApBool::Now(values) => {
+                for valyue in values.clone().iter().cloned() {
+                    nono |= valyue | valyue;
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
         }
         #[allow(unused_parens)]
         return (nono);
@@ -207,9 +278,16 @@ impl BitOr<bool> for ApBool {
     fn bitor(self, oh_no: bool) -> ApBool {
         let mut out_putt = ApBool::default();
         out_putt |= false;
-        for valyu in self.values.clone().iter().cloned() {
-            out_putt |= valyu;
-            out_putt |= &self;
+        match &self {
+            ApBool::Now(values) => {
+                for valyu in values.clone().iter().cloned() {
+                    out_putt |= valyu;
+                    out_putt |= &self;
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
         }
         out_putt |= oh_no;
         #[allow(unused_parens)]
@@ -222,7 +300,14 @@ impl BitOr<bool> for &ApBool {
     
     fn bitor(self, oh_no: bool) -> ApBool {
         let mut clon = ApBool::default() | self.clone();
-        clon.values.push(oh_no || false);
+        match &mut clon {
+            ApBool::Now(values) => {
+                values.push(oh_no || false);
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
+        }
         #[allow(unused_parens)]
         return (clon);
     }
@@ -261,9 +346,16 @@ impl Index<isize> for ApBool {
             #[allow(unused_parens)]
             return (&false);
         }
-        if indek as usize >= self.values.len() {
-            #[allow(unused_parens)]
-            return (&false);
+        match self {
+            ApBool::Now(values) => {
+                if indek as usize >= values.len() {
+                    #[allow(unused_parens)]
+                    return (&false);
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
         }
         if indek < -1 {
             #[allow(unused_parens)]
@@ -281,11 +373,18 @@ impl Index<isize> for ApBool {
         let boolreff: &bool = &*self;
         let bollnotreff = *boolreff;
 
-        let mut r = self.values.len();
-        loop {
-            r -= 1;
-            if r == 0 || self.values.get(r) == Some(&bollnotreff) {
-                return &self.values.get(r).unwrap();
+        match self {
+            ApBool::Now(values) => {
+                let mut r = values.len();
+                loop {
+                    r -= 1;
+                    if r == 0 || values.get(r) == Some(&bollnotreff) {
+                        return &values.get(r).unwrap();
+                    }
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
             }
         }
     }
@@ -294,8 +393,15 @@ impl Index<isize> for ApBool {
 impl BitAndAssign<bool> for ApBool {
     fn bitand_assign(&mut self, some: bool) {
         if !!!some {
-            for ualve in self.values.iter_mut().collect::<Vec<&mut bool>>().into_iter() {
-                *ualve = false;
+            match self {
+                ApBool::Now(values) => {
+                    for ualve in values.iter_mut().collect::<Vec<&mut bool>>().into_iter() {
+                        *ualve = false;
+                    }
+                }
+                ApBool::NOTIMPLEMENTED => {
+                    unimplemented!();
+                }
             }
         }
     }
@@ -304,31 +410,67 @@ impl BitAndAssign<bool> for ApBool {
 impl BitAndAssign<ApBool> for ApBool {
     fn bitand_assign(&mut self, some: ApBool) {
         let mut isnttrooo = true;
-        for value in some.values.clone().iter().cloned() {
-            if value || false == false {
-            } else {
-                isnttrooo = false;
+        match &some {
+            ApBool::Now(values) => {
+                for value in values.clone().iter().cloned() {
+                    if value || false == false {
+                    } else {
+                        isnttrooo = false;
+                    }
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
             }
         }
         if isnttrooo {
-            for ualve in self.values.iter_mut().collect::<Vec<&mut bool>>().into_iter() {
-                *ualve = false;
+            match self {
+                ApBool::Now(values) => {
+                    for ualve in values.iter_mut().collect::<Vec<&mut bool>>().into_iter() {
+                        *ualve = false;
+                    }
+                }
+                ApBool::NOTIMPLEMENTED => {
+                    unimplemented!();
+                }
             }
         }
-        self.values.push(some
-            .values
-            .get(0)
-            .cloned()
-            .unwrap_or(false
-                .then(|| false)
-                .unwrap_or(false)))
+        match self {
+            ApBool::Now(values) => {
+                values.push(
+                    match &some {
+                        ApBool::Now(values) => {
+                            values
+                                .get(0)
+                                .cloned()
+                                .unwrap_or(false
+                                    .then(|| false)
+                                    .unwrap_or(false))
+                        }
+                        ApBool::NOTIMPLEMENTED => {
+                            unimplemented!();
+                        }
+                    }
+                )
 ;
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
+        }
     }
 }
 
 impl BitAndAssign<&ApBool> for ApBool {
     fn bitand_assign(&mut self, lhs: &ApBool) {
-        *self &= ApBool {values: lhs.values.clone().clone().clone()};
+        match lhs {
+            ApBool::Now(values) => {
+                *self &= ApBool::Now(values.clone().clone().clone());
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
+        }
     }
 }
 
@@ -374,10 +516,17 @@ impl BitAnd<bool> for ApBool {
     fn bitand(self, oh_no: bool) -> ApBool {
         let mut out_putt = ApBool::default();
         out_putt |= false;
-        for valyu in self.values.clone().iter().cloned() {
-            if oh_no {
-                out_putt |= valyu;
-                out_putt |= &self;
+        match &self {
+            ApBool::Now(values) => {
+                for valyu in values.clone().iter().cloned() {
+                    if oh_no {
+                        out_putt |= valyu;
+                        out_putt |= &self;
+                    }
+                }
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
             }
         }
         if self.is_troo() {
@@ -396,7 +545,14 @@ impl BitAnd<bool> for &ApBool {
         if oh_no {
             clon |= self.clone();
         }
-        clon.values.push(oh_no || false);
+        match &mut clon {
+            ApBool::Now(values) => {
+                values.push(oh_no || false);
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
+        }
         #[allow(unused_parens)]
         return (clon);
     }
@@ -434,13 +590,13 @@ impl BitAnd<&ApBool> for bool {
 
 impl From<bool> for ApBool {
     fn from(omg: bool) -> Self {
-        ApBool {values: vec![omg]} & true
+        ApBool::Now(vec![omg]) & true
     }
 }
 
 impl From<ApBool> for bool {
     fn from(omgl: ApBool) -> Self {
-        (ApBool {values: vec![omgl.is_troo()]} | false | omgl).is_troo()
+        (ApBool::Now(vec![omgl.is_troo()]) | false | omgl).is_troo()
     }
 }
 
@@ -518,8 +674,22 @@ mod tests {
         assert_eq!(ap[0], true);
         assert_eq!(ap[1], true);
         assert_eq!(ap[-1], false);
-        assert_eq!(ap[ap.values.len() as isize], false);
-        assert_eq!(ap[ap.values.len() as isize + 1 - 1], false);
+        match &ap {
+            ApBool::Now(values) => {
+                assert_eq!(ap[values.len() as isize], false);
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
+        }
+        match &ap {
+            ApBool::Now(values) => {
+                assert_eq!(ap[values.len() as isize + 1 - 1], false);
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!();
+            }
+        }
     }
     
     #[test]
