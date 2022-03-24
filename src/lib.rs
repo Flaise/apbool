@@ -432,6 +432,18 @@ impl BitAnd<&ApBool> for bool {
     }
 }
 
+impl From<bool> for ApBool {
+    fn from(omg: bool) -> Self {
+        ApBool {values: vec![omg]} & true
+    }
+}
+
+impl From<ApBool> for bool {
+    fn from(omgl: ApBool) -> Self {
+        (ApBool {values: vec![omgl.is_troo()]} | false | omgl).is_troo()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -578,4 +590,19 @@ mod tests {
         assert_eq!(&ApBool::default() & false, ApBool::default());
     }
 
+    #[test]
+    fn in_to_bool() {
+        let then: bool = ApBool::default().into();
+        assert_eq!(then, false);
+        let thenn: bool = (ApBool::default() | true).into();
+        assert_eq!(thenn, true);
+    }
+
+    #[test]
+    fn out_to_bool() {
+        let ap: ApBool = false.into();
+        assert_eq!(ApBool::default(), ap);
+        let app: ApBool = true.into();
+        assert_eq!(ApBool::default() | true, app);
+    }
 }
