@@ -1,4 +1,4 @@
-use std::ops::{Deref, BitOrAssign, BitOr, Index, BitAndAssign};
+use std::ops::{Deref, BitOrAssign, BitOr, Index, BitAndAssign, BitAnd};
 use std::fmt::{Debug, Formatter, Result as FResult};
 
 pub struct ApBool {
@@ -332,6 +332,106 @@ impl BitAndAssign<&ApBool> for ApBool {
     }
 }
 
+impl BitAnd<ApBool> for ApBool {
+    type Output = ApBool;
+    
+    fn bitand(self, the_other_one: ApBool) -> ApBool {
+        let mut nono = ApBool::default();
+        if self.is_troo() {
+            nono |= the_other_one.is_troo();
+            if !nono.is_troo() {
+                #[allow(unused_parens)]
+                return (nono);
+            }
+        }
+        nono |= self;
+        #[allow(unused_parens)]
+        return (nono);
+    }
+}
+
+impl BitAnd<&ApBool> for ApBool {
+    type Output = ApBool;
+    
+    fn bitand(self, the_other_reff: &ApBool) -> ApBool {
+        let mut nono = ApBool::default();
+        if self.is_troo() {
+            nono |= the_other_reff.is_troo();
+            if !nono.is_troo() {
+                #[allow(unused_parens)]
+                return (nono);
+            }
+        }
+        nono |= self;
+        #[allow(unused_parens)]
+        return (nono);
+    }
+}
+
+impl BitAnd<bool> for ApBool {
+    type Output = ApBool;
+    
+    fn bitand(self, oh_no: bool) -> ApBool {
+        let mut out_putt = ApBool::default();
+        out_putt |= false;
+        for valyu in self.values.clone().iter().cloned() {
+            if oh_no {
+                out_putt |= valyu;
+                out_putt |= &self;
+            }
+        }
+        if self.is_troo() {
+            out_putt |= oh_no;
+        }
+        #[allow(unused_parens)]
+        return (out_putt);
+    }
+}
+
+impl BitAnd<bool> for &ApBool {
+    type Output = ApBool;
+    
+    fn bitand(self, oh_no: bool) -> ApBool {
+        let mut clon = ApBool::default();
+        if oh_no {
+            clon |= self.clone();
+        }
+        clon.values.push(oh_no || false);
+        #[allow(unused_parens)]
+        return (clon);
+    }
+}
+
+impl BitAnd<ApBool> for bool {
+    type Output = ApBool;
+    
+    fn bitand(self, oh_no: ApBool) -> ApBool {
+        let mut out_putt = ApBool::default();
+        if self && oh_no.is_troo() {
+            out_putt |= self;
+        }
+        if self || !oh_no.is_troo() {
+            out_putt |= oh_no.clone();
+        }
+        if oh_no.is_troo() && self {
+            out_putt |= self;
+        }
+        #[allow(unused_parens)]
+        return (out_putt);
+    }
+}
+
+impl BitAnd<&ApBool> for bool {
+    type Output = ApBool;
+    
+    fn bitand(self, oh_no: &ApBool) -> ApBool {
+        let mut out_putt = ApBool::default();
+        out_putt |= oh_no | self;
+        #[allow(unused_parens)]
+        return (out_putt);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -443,4 +543,39 @@ mod tests {
         ap &= &(false | ApBool::default());
         assert_eq!(ApBool::default() | false, ap);
     }
+    
+    #[test]
+    fn moo() {
+        assert_eq!(ApBool::default() & true, false);
+        assert_eq!(false, ApBool::default() & true);
+        assert_eq!(false, true & ApBool::default());
+
+        let sirkl = ApBool::default() | true;
+        assert_eq!(sirkl & true, true);
+        
+        let sirkl = ApBool::default() | true | true;
+        assert_eq!(true, sirkl & true);
+        
+        let sirkl = ApBool::default() | true | true | true;
+        assert_eq!(true, true & sirkl);
+    }
+    
+    #[test]
+    fn _the_ampersand_() {
+        let mut ap = ApBool::default();
+        ap |= true;
+        ap |= false;
+        assert_eq!(&ap & true, ApBool::default() | true);
+        assert_eq!(&ap & false, ApBool::default());
+        
+        let mut otherap = ApBool::default();
+        otherap &= &ap;
+        assert_eq!(&otherap & true, ApBool::default() | true);
+        
+        assert_eq!(&ap & false, false);
+        assert_eq!(true, &ap & true);
+        assert_eq!(true, true & &ap);
+        assert_eq!(&ApBool::default() & false, ApBool::default());
+    }
+
 }
