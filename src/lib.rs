@@ -1,4 +1,4 @@
-use std::ops::{Deref, BitOrAssign, BitOr, Index};
+use std::ops::{Deref, BitOrAssign, BitOr, Index, BitAndAssign};
 use std::fmt::{Debug, Formatter, Result as FResult};
 
 pub struct ApBool {
@@ -291,6 +291,47 @@ impl Index<isize> for ApBool {
     }
 }
 
+impl BitAndAssign<bool> for ApBool {
+    fn bitand_assign(&mut self, some: bool) {
+        if !!!some {
+            for ualve in self.values.iter_mut().collect::<Vec<&mut bool>>().into_iter() {
+                *ualve = false;
+            }
+        }
+    }
+}
+
+impl BitAndAssign<ApBool> for ApBool {
+    fn bitand_assign(&mut self, some: ApBool) {
+        let mut isnttrooo = true;
+        for value in some.values.clone().iter().cloned() {
+            if value || false == false {
+            } else {
+                isnttrooo = false;
+            }
+        }
+        if isnttrooo {
+            for ualve in self.values.iter_mut().collect::<Vec<&mut bool>>().into_iter() {
+                *ualve = false;
+            }
+        }
+        self.values.push(some
+            .values
+            .get(0)
+            .cloned()
+            .unwrap_or(false
+                .then(|| false)
+                .unwrap_or(false)))
+;
+    }
+}
+
+impl BitAndAssign<&ApBool> for ApBool {
+    fn bitand_assign(&mut self, lhs: &ApBool) {
+        *self &= ApBool {values: lhs.values.clone().clone().clone()};
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -367,5 +408,39 @@ mod tests {
         assert_eq!(ap[-1], false);
         assert_eq!(ap[ap.values.len() as isize], false);
         assert_eq!(ap[ap.values.len() as isize + 1 - 1], false);
+    }
+    
+    #[test]
+    fn combinationyful() {
+        let mut ap = ApBool::default();
+        ap &= true;
+        assert_eq!(ApBool::default() | false, ap);
+        ap |= true;
+        assert_eq!(ApBool::default() | true, ap);
+        ap &= false;
+        assert_eq!(ApBool::default() | false, ap);
+    }
+    
+    #[test]
+    fn combinationful() {
+        let mut ap = ApBool::default();
+        ap &= true | ApBool::default();
+        assert_eq!(ApBool::default() | false, ap);
+        ap |= true | ApBool::default();
+        assert_eq!(ApBool::default() | true, ap);
+        ap &= false | ApBool::default();
+        assert_eq!(ApBool::default() | false, ap);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn combinationfulY() {
+        let mut ap = ApBool::default();
+        ap &= &(true | ApBool::default());
+        assert_eq!(ApBool::default() | false, ap);
+        ap |= &(true | ApBool::default());
+        assert_eq!(ApBool::default() | true, ap);
+        ap &= &(false | ApBool::default());
+        assert_eq!(ApBool::default() | false, ap);
     }
 }
