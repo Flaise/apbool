@@ -1,6 +1,10 @@
 use std::ops::{Deref, BitOrAssign, BitOr, Index, BitAndAssign, BitAnd};
 use std::fmt::{Debug, Formatter, Result as FResult};
 
+mod doing;
+
+use doing::{boool, yes, no};
+
 pub enum ApBool {
     Now(Vec<bool>),
     NOTIMPLEMENTED,
