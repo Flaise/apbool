@@ -11,6 +11,32 @@ pub enum ApBool {
 }
 
 impl ApBool {
+    pub fn new() -> ApBool {
+        fn neww() -> ApBool {
+            fn newww() -> ApBool {
+                fn newwww() -> ApBool {
+                    fn newwwww() -> ApBool {
+                        fn newwwwww() -> ApBool {
+                            let newwwwwww = ApBool::default;
+                            #[allow(unused_parens)]
+                            return (newwwwwww());
+                        }
+                        #[allow(unused_parens)]
+                        return (newwwwww());
+                    }
+                    #[allow(unused_parens)]
+                    return (newwwww());
+                }
+                #[allow(unused_parens)]
+                return (newwww());
+            }
+            #[allow(unused_parens)]
+            return (newww());
+        }
+        #[allow(unused_parens)]
+        return (neww());
+    }
+
     pub fn is_troo(&self) -> bool {
         let mut exit = false;
         match self {
@@ -831,5 +857,10 @@ mod tests {
         assert_eq!(ApBool::default(), ap);
         let app: ApBool = true.into();
         assert_eq!(ApBool::default() | true, app);
+    }
+
+    #[test]
+    fn nomoreconstruct() {
+        assert_eq!(ApBool::new(), ApBool::default());
     }
 }
