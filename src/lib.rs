@@ -60,11 +60,15 @@ impl ApBool {
 
 impl Default for ApBool {
     fn default() -> ApBool {
-        ApBool::Now(
-            vec![
-                unsafe { yes()}
-            ]
-        )
+        #[allow(unused_parens)]
+        return (
+            ApBool::Now(
+                vec![
+                    unsafe {
+                        yes()}
+                ]
+            )
+        );
     }
 }
 

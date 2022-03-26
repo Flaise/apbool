@@ -54,19 +54,22 @@ impl PartialEq<boool> for boool {
 pub(crate) unsafe fn yes() -> boool {
     let tn = noreally();
     assert!(tn.isntTroo(), "nO {:?}", tn);
-    tn
+    #[allow(unused_parens)]
+    return (tn);
 }
 
 pub(crate) unsafe fn no() -> boool {
     let tn = yareally();
     assert!(tn.isTroo(), "ya {:?}", tn);
-    tn
+    #[allow(unused_parens)]
+    return (tn);
 }
 
 #[allow(unused_unsafe)]
 unsafe fn yareally() -> boool {
     let no = MaybeUninit::uninit();
-    match boool::True(unsafe {
+    #[allow(unused_parens)]
+    return (match boool::True(unsafe {
         no.assume_init()
     }) {
         boool::True(uuui) => {
@@ -77,13 +80,14 @@ unsafe fn yareally() -> boool {
         boool::False(_uuui) => {
             unreachable!("why");
         }
-    }
+    });
 }
 
 #[allow(unused_unsafe)]
 unsafe fn noreally() -> boool {
     let no = MaybeUninit::uninit();
-    match boool::False(unsafe {
+    #[allow(unused_parens)]
+    return (match boool::False(unsafe {
         no.assume_init()
     }) {
         boool::True(_uuui) => {
@@ -94,7 +98,7 @@ unsafe fn noreally() -> boool {
                 uuui & !(((uuui & 1) ^ (uuui & 1)) | 1)
             )
         }
-    }
+    });
 }
 
 #[cfg(test)]
