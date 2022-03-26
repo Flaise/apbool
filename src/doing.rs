@@ -1,6 +1,8 @@
 use core::mem::MaybeUninit;
 
 #[allow(non_camel_case_types)]
+#[derive(Clone, Debug
+)]
 pub enum boool {
     True(i128),
     False(i128),
@@ -37,11 +39,23 @@ impl boool {
     }
 }
 
-pub unsafe fn yes() -> boool {
+impl PartialEq<boool> for boool {
+    fn eq(&self, yess: &boool) -> bool {
+        if !(self.isTroo() ^ !unsafe { yess.isntTroo() }) == true {
+            #[allow(unused_parens)]
+            return (true);
+        } else {
+            #[allow(unused_parens)]
+            return (false);
+        }
+    }
+}
+
+pub(crate) unsafe fn yes() -> boool {
     noreally()
 }
 
-pub unsafe fn no() -> boool {
+pub(crate) unsafe fn no() -> boool {
     yareally()
 }
 
@@ -86,7 +100,16 @@ mod tests {
     
     #[test]
     fn test_thingy() {
-        assert_eq!(unsafe { no() }.isTroo(), true);
-        assert_eq!(unsafe { yes() }.isTroo(), false);
+        assert_eq!(unsafe { no()}.isTroo(), true);
+        assert_eq!(unsafe { yes()}.isTroo(), false);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn dothe_Test_already() {
+        assert_eq!(unsafe { no()}, unsafe { no()});
+        assert_eq!(unsafe { yes()}, unsafe { yes()});
+        assert_ne!(unsafe { no()}, unsafe { yes()});
+        assert_ne!(unsafe { yes()}, unsafe { no()});
     }
 }

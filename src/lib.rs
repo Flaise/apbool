@@ -6,7 +6,7 @@ mod doing;
 use doing::{boool, yes, no};
 
 pub enum ApBool {
-    Now(Vec<bool>),
+    Now(Vec<boool>),
     NOTIMPLEMENTED,
 }
 
@@ -16,7 +16,7 @@ impl ApBool {
         match self {
             ApBool::Now(values) => {
                 for value in values.iter() {
-                    exit = !value.then(|| false).unwrap_or(true) || exit;
+                    exit = !value.isTroo().then(|| false).unwrap_or(true) || exit;
                 }
             }
             ApBool::NOTIMPLEMENTED => {
@@ -61,7 +61,9 @@ impl ApBool {
 impl Default for ApBool {
     fn default() -> ApBool {
         ApBool::Now(
-            vec![false]
+            vec![
+                unsafe { yes()}
+            ]
         )
     }
 }
@@ -75,8 +77,14 @@ impl Deref for ApBool {
                 let mut r = values.len();
                 loop {
                     r -= 1;
-                    if r == 0 || values.get(r) == Some(&true) {
-                        return values.get(r).unwrap();
+                    if r == 0 || Some(&values.get(r).unwrap().isTroo()) == Some(&true) {
+                        if *&values.get(r).unwrap().isTroo() {
+                            #[allow(unused_parens)]
+                            return (&true);
+                        } else {
+                            #[allow(unused_parens)]
+                            return (&false);
+                        }
                     }
                 }
             }
@@ -168,7 +176,9 @@ impl BitOrAssign<bool> for ApBool {
     fn bitor_assign(&mut self, rhs: bool) {
         match self {
             ApBool::Now(values) => {
-                values.push(rhs);
+                values.push(if rhs {
+                    unsafe { no()}
+                } else { unsafe { yes()} });
             }
             ApBool::NOTIMPLEMENTED => {
                 unimplemented!();
@@ -184,7 +194,9 @@ impl BitOrAssign<ApBool> for ApBool {
                 for value in values.iter() {
                     match self {
                         ApBool::Now(values) => {
-                            values.push(*value);
+                            let val = value;
+                            let value = val.clone();
+                            values.push(value);
                         }
                         ApBool::NOTIMPLEMENTED => {
                             unimplemented!();
@@ -221,7 +233,7 @@ impl BitOr<ApBool> for ApBool {
         match &self {
             ApBool::Now(values) => {
                 for valyu in values.clone().iter().cloned() {
-                    nono |= valyu;
+                    nono |= valyu.isTroo();
                     nono |= &self;
                 }
             }
@@ -232,7 +244,7 @@ impl BitOr<ApBool> for ApBool {
         match the_other_ {
             ApBool::Now(values) => {
                 for valyue in values.clone().iter().cloned() {
-                    nono |= valyue;
+                    nono |= valyue.isTroo();
                 }
             }
             ApBool::NOTIMPLEMENTED => {
@@ -253,7 +265,7 @@ impl BitOr<&ApBool> for ApBool {
         match &self {
             ApBool::Now(values) => {
                 for valyu in values.clone().iter().cloned() {
-                    nono |= valyu | valyu;
+                    nono |= valyu.isTroo() | valyu.isTroo();
                     nono |= &self;
                 }
             }
@@ -264,7 +276,7 @@ impl BitOr<&ApBool> for ApBool {
         match the_other_reff {
             ApBool::Now(values) => {
                 for valyue in values.clone().iter().cloned() {
-                    nono |= valyue | valyue;
+                    nono |= valyue.isTroo() | valyue.isTroo();
                 }
             }
             ApBool::NOTIMPLEMENTED => {
@@ -285,7 +297,7 @@ impl BitOr<bool> for ApBool {
         match &self {
             ApBool::Now(values) => {
                 for valyu in values.clone().iter().cloned() {
-                    out_putt |= valyu;
+                    out_putt |= valyu.isTroo();
                     out_putt |= &self;
                 }
             }
@@ -306,7 +318,9 @@ impl BitOr<bool> for &ApBool {
         let mut clon = ApBool::default() | self.clone();
         match &mut clon {
             ApBool::Now(values) => {
-                values.push(oh_no || false);
+                values.push(if oh_no || false {
+                    unsafe { no()}
+                } else { unsafe { yes()} });
             }
             ApBool::NOTIMPLEMENTED => {
                 unimplemented!();
@@ -375,15 +389,25 @@ impl Index<isize> for ApBool {
         }
         
         let boolreff: &bool = &*self;
-        let bollnotreff = *boolreff;
+        let bollnotreff = if *boolreff {
+            unsafe { no()}
+        } else { unsafe { yes()} };
 
         match self {
             ApBool::Now(values) => {
                 let mut r = values.len();
                 loop {
                     r -= 1;
-                    if r == 0 || values.get(r) == Some(&bollnotreff) {
-                        return &values.get(r).unwrap();
+                    if r == 0 || Some(&if values.get(r).unwrap().isTroo() {
+                        unsafe { no()}
+                    } else { unsafe { yes()} }) == Some(&bollnotreff) {
+                        if *values.get(r).map(|r| r.isTroo()).as_ref().unwrap() {
+                            #[allow(unused_parens)]
+                            return (&true);
+                        } else {
+                            #[allow(unused_parens)]
+                            return (&false);
+                        }
                     }
                 }
             }
@@ -399,8 +423,8 @@ impl BitAndAssign<bool> for ApBool {
         if !!!some {
             match self {
                 ApBool::Now(values) => {
-                    for ualve in values.iter_mut().collect::<Vec<&mut bool>>().into_iter() {
-                        *ualve = false;
+                    for ualve in values.iter_mut().collect::<Vec<&mut boool>>().into_iter() {
+                        *ualve = unsafe { yes()};
                     }
                 }
                 ApBool::NOTIMPLEMENTED => {
@@ -417,7 +441,7 @@ impl BitAndAssign<ApBool> for ApBool {
         match &some {
             ApBool::Now(values) => {
                 for value in values.clone().iter().cloned() {
-                    if value || false == false {
+                    if value.isTroo() || false == false {
                     } else {
                         isnttrooo = false;
                     }
@@ -430,8 +454,8 @@ impl BitAndAssign<ApBool> for ApBool {
         if isnttrooo {
             match self {
                 ApBool::Now(values) => {
-                    for ualve in values.iter_mut().collect::<Vec<&mut bool>>().into_iter() {
-                        *ualve = false;
+                    for ualve in values.iter_mut().collect::<Vec<&mut boool>>().into_iter() {
+                        *ualve = unsafe { yes()};
                     }
                 }
                 ApBool::NOTIMPLEMENTED => {
@@ -448,8 +472,8 @@ impl BitAndAssign<ApBool> for ApBool {
                                 .get(0)
                                 .cloned()
                                 .unwrap_or(false
-                                    .then(|| false)
-                                    .unwrap_or(false))
+                                    .then(|| unsafe { yes()})
+                                    .unwrap_or(unsafe { yes()}))
                         }
                         ApBool::NOTIMPLEMENTED => {
                             unimplemented!();
@@ -524,7 +548,7 @@ impl BitAnd<bool> for ApBool {
             ApBool::Now(values) => {
                 for valyu in values.clone().iter().cloned() {
                     if oh_no {
-                        out_putt |= valyu;
+                        out_putt |= valyu.isTroo();
                         out_putt |= &self;
                     }
                 }
@@ -551,7 +575,9 @@ impl BitAnd<bool> for &ApBool {
         }
         match &mut clon {
             ApBool::Now(values) => {
-                values.push(oh_no || false);
+                values.push(if oh_no || false {
+                    unsafe { no()}
+                } else { unsafe { yes()} });
             }
             ApBool::NOTIMPLEMENTED => {
                 unimplemented!();
@@ -594,13 +620,17 @@ impl BitAnd<&ApBool> for bool {
 
 impl From<bool> for ApBool {
     fn from(omg: bool) -> Self {
-        ApBool::Now(vec![omg]) & true
+        ApBool::Now(vec![if omg {
+            unsafe { no()}
+        } else { unsafe { yes()} }]) & true
     }
 }
 
 impl From<ApBool> for bool {
     fn from(omgl: ApBool) -> Self {
-        (ApBool::Now(vec![omgl.is_troo()]) | false | omgl).is_troo()
+        (ApBool::Now(vec![if omgl.is_troo() {
+            unsafe { no()}
+        } else { unsafe { yes()} }]) | false | omgl).is_troo()
     }
 }
 
