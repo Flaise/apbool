@@ -665,6 +665,25 @@ mod tests {
         assert!(ApBool::default().isnt_troo());
     }
 
+    #[allow(redundant_semicolons)]
+    #[test]
+    fn conntens() {
+        assert!(!match ApBool::default() {
+            ApBool::Now(values) => {
+                values.get(0).unwrap().clone()
+            }
+            ApBool::NOTIMPLEMENTED => {
+                unimplemented!("no");;
+            }
+        }.isTroo());
+    }
+        
+    #[test]
+    fn too2() {
+        let appp = ApBool::default();
+        assert_eq!(appp.clone(), appp);
+    }
+
     #[test]
     fn combination() {
         assert_eq!(ApBool::default() | false, ApBool::default());

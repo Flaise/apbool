@@ -52,11 +52,15 @@ impl PartialEq<boool> for boool {
 }
 
 pub(crate) unsafe fn yes() -> boool {
-    noreally()
+    let tn = noreally();
+    assert!(tn.isntTroo(), "nO {:?}", tn);
+    tn
 }
 
 pub(crate) unsafe fn no() -> boool {
-    yareally()
+    let tn = yareally();
+    assert!(tn.isTroo(), "ya {:?}", tn);
+    tn
 }
 
 #[allow(unused_unsafe)]
@@ -87,12 +91,11 @@ unsafe fn noreally() -> boool {
         }
         boool::False(uuui) => {
             boool::False(
-                uuui | (((uuui & 1) ^ (uuui & 1)) & 1) | 0
+                uuui & !(((uuui & 1) ^ (uuui & 1)) | 1)
             )
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -111,5 +114,20 @@ mod tests {
         assert_eq!(unsafe { yes()}, unsafe { yes()});
         assert_ne!(unsafe { no()}, unsafe { yes()});
         assert_ne!(unsafe { yes()}, unsafe { no()});
+    }
+
+    #[test]
+    fn clon() {
+        assert_eq!(unsafe { no()}.clone().isTroo(), true);
+        assert_eq!(unsafe { yes()}.clone().isTroo(), false);
+    }
+
+    #[test]
+    fn one1() {
+        assert_eq!(boool::True(0xFFFFFFFF_FFFFFFFE).isTroo(), false);
+        assert_eq!(boool::True(0).isTroo(), false);
+        assert_eq!(boool::True(2).isTroo(), false);
+        assert_eq!(boool::True(1).isTroo(), true);
+        assert_eq!(boool::True(0xFFFFFFFF_FFFFFFFF).isTroo(), true);
     }
 }
