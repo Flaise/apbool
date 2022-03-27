@@ -3,5 +3,10 @@ name = "apbool"
 version = "0.1.0"
 edition = "2021"
 license = "AGPL-3.0-only"
+readme = "ReADME.MD"
+categories = ["data-structures", "science", "mathematics", "memory-management", "algorithms"]
+keywords = ["math", "utility", "binary", "data", "library"]
+repository = "https://github.com/Flaise/apbool"
+description = "Just arbitrary precision boolean arithmetic for Rust."
 
 [dependencies]
