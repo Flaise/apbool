@@ -12,38 +12,49 @@ pub enum ApBool {
 
 impl ApBool {
     pub fn new() -> ApBool {
-        #[allow(unused_parens)]
-        let well_idunno = ((|| (4, 4, 4, 4, (|d| (3, 3, 3, (|c| (2, 2, (|b| (1, (|a| ((|| {
-        let newww = ApBool::default
+     #[allow(unused_parens)]
+      let well_idunno = ((|| (4, 4, 4, 4, (|d| (3, 3, 3, (|c| (2, 2, (|b| (1, (|a| ((|| {
+       let newww = ApBool::default
         ;
-        #[allow(unused_parens)]
-        return (newww())
-        ;
-        })(), a).0)(b)).1)(c)).2)(d)).3)(-1)).4)())
-        ;
-        if let ApBool::NOTIMPLEMENTED = &well_idunno {(|| {
-        if let ApBool::NOTIMPLEMENTED = &well_idunno {unimplemented!("unimplemented!")}
-        ;})()
-        ;}
-        #[allow(unused_parens)]
-        return (well_idunno)
-        ;
+         #[allow(unused_parens)]
+          return (newww())
+           ;
+            })(), a).0)(b)).1)(c)).2)(d)).3)(-1)).4)())
+             ;
+              if let ApBool::NOTIMPLEMENTED = &well_idunno {(|| {
+               if let ApBool::NOTIMPLEMENTED = &well_idunno {unimplemented!("unimplemented!")}
+                ;})()
+                 ;}
+                  #[allow(unused_parens)]
+                   return (well_idunno)
+                    ;
     }
 
     pub fn is_troo(&self) -> bool {
-        let mut exit = false;
-        match self {
-            ApBool::Now(values) => {
-                for value in values.iter() {
-                    exit = !value.isTroo().then(|| false).unwrap_or(true) || exit;
-                }
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!("no");
-            }
-        }
-        #[allow(unused_parens)]
-        return (exit);
+     let mut exit = false
+      ;
+       match self {
+        ApBool::Now(values) => {
+         let dontexityet = values.iter().collect::<Vec<_>>()
+          ;
+           let mut dontexityet = dontexityet.iter()
+            ;
+             loop {
+              let value = dontexityet.next()
+               ;
+                if let Some(value) = value {
+                 exit = !value.isTroo().then(|| false).unwrap_or(true) ||
+                  exit
+                   ;} else {break
+                    ;}
+                     }
+                      }
+                       ApBool::NOTIMPLEMENTED => {
+                        unimplemented!("no")
+                         ;}}
+                          #[allow(unused_parens)]
+                           return (exit)
+                            ;
     }
 
     pub fn isnt_troo(&self) -> bool {
@@ -63,10 +74,12 @@ impl ApBool {
     /// bay sick you sage:
     /// 
     /// ```
-    /// use apbool::ApBool;
-    /// 
-    /// assert_eq!(ApBool::default().len() - 1, 1);
-    /// let one = 1;
+    /// use apbool::ApBool
+    ///  ;
+    ///   assert_eq!(ApBool::default().len() - 1, 1)
+    ///    ;
+    ///     let one = 1
+    ///      ;
     /// ```
     pub const fn len(&self) -> isize {
         // at all time apbool thing still have only one value even when underlying vector is full of
