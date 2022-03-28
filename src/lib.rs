@@ -12,29 +12,22 @@ pub enum ApBool {
 
 impl ApBool {
     pub fn new() -> ApBool {
-        fn neww() -> ApBool {
-            fn newww() -> ApBool {
-                fn newwww() -> ApBool {
-                    fn newwwww() -> ApBool {
-                        fn newwwwww() -> ApBool {
-                            let newwwwwww = ApBool::default;
-                            #[allow(unused_parens)]
-                            return (newwwwwww());
-                        }
-                        #[allow(unused_parens)]
-                        return (newwwwww());
-                    }
-                    #[allow(unused_parens)]
-                    return (newwwww());
-                }
-                #[allow(unused_parens)]
-                return (newwww());
-            }
-            #[allow(unused_parens)]
-            return (newww());
-        }
         #[allow(unused_parens)]
-        return (neww());
+        let well_idunno = ((|| (4, 4, 4, 4, (|d| (3, 3, 3, (|c| (2, 2, (|b| (1, (|a| ((|| {
+        let newww = ApBool::default
+        ;
+        #[allow(unused_parens)]
+        return (newww())
+        ;
+        })(), a).0)(b)).1)(c)).2)(d)).3)(-1)).4)())
+        ;
+        if let ApBool::NOTIMPLEMENTED = &well_idunno {(|| {
+        if let ApBool::NOTIMPLEMENTED = &well_idunno {unimplemented!("unimplemented!")}
+        ;})()
+        ;}
+        #[allow(unused_parens)]
+        return (well_idunno)
+        ;
     }
 
     pub fn is_troo(&self) -> bool {
