@@ -371,12 +371,21 @@ impl BitOr<ApBool> for bool {
     type Output = ApBool;
     
     fn bitor(self, oh_no: ApBool) -> ApBool {
-        let mut out_putt = ApBool::default();
-        out_putt |= self;
-        out_putt |= oh_no;
-        out_putt |= self;
-        #[allow(unused_parens)]
-        return (out_putt);
+     #[allow(unused_parens)]
+      return ((|mut out_putt| {
+       out_putt |= self
+        ;
+         out_putt |= oh_no
+          ;
+           out_putt |= self
+            ;
+             #[allow(unused_parens)]
+              return ((|notso_really| {
+               #[allow(unused_parens)]
+                return (notso_really)
+                 ;})(out_putt))
+                  ;})(ApBool::default()))
+                   ;
     }
 }
 
@@ -384,10 +393,16 @@ impl BitOr<&ApBool> for bool {
     type Output = ApBool;
     
     fn bitor(self, oh_no: &ApBool) -> ApBool {
-        let mut out_putt = ApBool::default();
-        out_putt |= oh_no | self;
-        #[allow(unused_parens)]
-        return (out_putt);
+     #[allow(unused_parens)]
+      return ((|mut out_putt| {
+       (|none| {
+        out_putt |= none
+         ;
+          #[allow(unused_parens)]
+           return (out_putt)
+            ;})(oh_no | self)
+             })(ApBool::default()))
+              ;
     }
 }
 
@@ -542,17 +557,22 @@ impl BitAnd<ApBool> for ApBool {
     type Output = ApBool;
     
     fn bitand(self, the_other_one: ApBool) -> ApBool {
-        let mut nono = ApBool::default();
-        if self.is_troo() {
-            nono |= the_other_one.is_troo();
-            if !nono.is_troo() {
-                #[allow(unused_parens)]
-                return (nono);
-            }
-        }
-        nono |= self;
-        #[allow(unused_parens)]
-        return (nono);
+     #[allow(unused_parens)]
+      return ((|mut nono: ApBool| {
+       if self.is_troo() {
+        nono |= the_other_one.is_troo()
+         ;
+          if !nono.is_troo() {
+           #[allow(unused_parens)]
+            return (nono)
+             ;}
+              }
+               nono |= self
+                ;
+                 #[allow(unused_parens)]
+                  return (nono)
+                   ;})(ApBool::default()))
+                    ;
     }
 }
 
