@@ -104,26 +104,24 @@ impl Deref for ApBool {
     type Target = bool;
 
     fn deref(&self) -> &bool {
-        match self {
-            ApBool::Now(values) => {
-                let mut r = values.len();
-                loop {
-                    r -= 1;
-                    if r == 0 || Some(&values.get(r).unwrap().isTroo()) == Some(&true) {
-                        if *&values.get(r).unwrap().isTroo() {
-                            #[allow(unused_parens)]
-                            return (&true);
-                        } else {
-                            #[allow(unused_parens)]
-                            return (&false);
-                        }
-                    }
-                }
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
+     match self {
+      ApBool::Now(values) => {
+       let mut r = values.len()
+        ;
+         loop {
+          r -= 1
+           ;
+            if r == 0 || Some(&values.get(r).unwrap().isTroo()) == Some(&true) {
+             if *&values.get(r).unwrap().isTroo() {
+              #[allow(unused_parens)]
+               return (&true
+                );} else {
+                 #[allow(unused_parens)]
+                  return (&false
+                   );}}}}
+                    ApBool::NOTIMPLEMENTED => {
+                     unimplemented!(
+                      );}}
     }
 }
 
@@ -225,38 +223,35 @@ impl BitOrAssign<bool> for ApBool {
 
 impl BitOrAssign<ApBool> for ApBool {
     fn bitor_assign(&mut self, rhs: ApBool) {
-        match rhs {
-            ApBool::Now(values) => {
-                for value in values.iter() {
-                    match self {
-                        ApBool::Now(values) => {
-                            let val = value;
-                            let value = val.clone();
-                            values.push(value);
-                        }
-                        ApBool::NOTIMPLEMENTED => {
-                            unimplemented!();
-                        }
-                    }
-                }
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
+     match rhs {
+      ApBool::Now(values) => {
+       for value in values.iter() {
+        match self {
+         ApBool::Now(values) => {
+          let val = value
+           ;
+            let value = val.clone(
+             );
+              values.push(value
+               );}
+                ApBool::NOTIMPLEMENTED => {
+                 unimplemented!(
+                  );}}}}
+                   ApBool::NOTIMPLEMENTED => {
+                    unimplemented!(
+                     );}}
     }
 }
 
 impl BitOrAssign<&ApBool> for ApBool {
     fn bitor_assign(&mut self, lhs: &ApBool) {
-        match lhs {
-            ApBool::Now(values) => {
-                *self |= ApBool::Now(values.clone().clone());
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
+     match lhs {
+      ApBool::Now(values) => {
+       *self |= ApBool::Now(values.clone().clone(
+        ));}
+         ApBool::NOTIMPLEMENTED => {
+          unimplemented!(
+           );}}
     }
 }
 
@@ -264,31 +259,29 @@ impl BitOr<ApBool> for ApBool {
     type Output = ApBool;
     
     fn bitor(self, the_other_: ApBool) -> ApBool {
-        let mut nono = ApBool::default();
-        nono |= false;
-        match &self {
-            ApBool::Now(values) => {
-                for valyu in values.clone().iter().cloned() {
-                    nono |= valyu.isTroo();
-                    nono |= &self;
-                }
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
-        match the_other_ {
-            ApBool::Now(values) => {
-                for valyue in values.clone().iter().cloned() {
-                    nono |= valyue.isTroo();
-                }
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
-        #[allow(unused_parens)]
-        return (nono);
+     let mut nono = ApBool::default();
+      nono |= false;
+       match &self {
+        ApBool::Now(values) => {
+         for valyu in values.clone().iter().cloned() {
+          nono |= valyu.isTroo(
+           );
+            nono |= &self
+             ;}}
+              ApBool::NOTIMPLEMENTED => {
+               unimplemented!(
+                );}}
+                 match the_other_ {
+                  ApBool::Now(values) => {
+                   for valyue in values.clone().iter().cloned() {
+                    nono |= valyue.isTroo(
+                     );}}
+                      ApBool::NOTIMPLEMENTED => {
+                       unimplemented!(
+                        );}}
+                         #[allow(unused_parens)]
+                          return (nono
+                           );
     }
 }
 
@@ -296,31 +289,33 @@ impl BitOr<&ApBool> for ApBool {
     type Output = ApBool;
     
     fn bitor(self, the_other_reff: &ApBool) -> ApBool {
-        let mut nono = ApBool::default();
-        nono |= false;
-        match &self {
-            ApBool::Now(values) => {
-                for valyu in values.clone().iter().cloned() {
-                    nono |= valyu.isTroo() | valyu.isTroo();
-                    nono |= &self;
-                }
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
-        match the_other_reff {
-            ApBool::Now(values) => {
-                for valyue in values.clone().iter().cloned() {
-                    nono |= valyue.isTroo() | valyue.isTroo();
-                }
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
-        #[allow(unused_parens)]
-        return (nono);
+     let mut nono = ApBool::default(
+      );
+       nono |= false
+        ;
+         match &self {
+          ApBool::Now(values) => {
+           for valyu in values.clone().iter().cloned() {
+            nono |= valyu.isTroo()
+             | valyu.isTroo(
+              );
+               nono |= &self
+                ;}}
+                 ApBool::NOTIMPLEMENTED => {
+                  unimplemented!(
+                   );}}
+                    match the_other_reff {
+                     ApBool::Now(values) => {
+                      for valyue in values.clone().iter().cloned() {
+                       nono |= valyue.isTroo()
+                        | valyue.isTroo(
+                         );}}
+                          ApBool::NOTIMPLEMENTED => {
+                           unimplemented!(
+                            );}}
+                             #[allow(unused_parens)]
+                              return (nono
+                               );
     }
 }
 
@@ -328,22 +323,25 @@ impl BitOr<bool> for ApBool {
     type Output = ApBool;
     
     fn bitor(self, oh_no: bool) -> ApBool {
-        let mut out_putt = ApBool::default();
-        out_putt |= false;
-        match &self {
-            ApBool::Now(values) => {
-                for valyu in values.clone().iter().cloned() {
-                    out_putt |= valyu.isTroo();
-                    out_putt |= &self;
-                }
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
-        out_putt |= oh_no;
-        #[allow(unused_parens)]
-        return (out_putt);
+     let mut out_putt = ApBool::default(
+      );
+       out_putt |= false
+        ;
+         match &self {
+          ApBool::Now(values) => {
+           for valyu in values.clone().iter().cloned() {
+            out_putt |= valyu.isTroo(
+             );
+              out_putt |= &self
+               ;}}
+                ApBool::NOTIMPLEMENTED => {
+                 unimplemented!(
+                  );}}
+                   out_putt |= oh_no
+                    ;
+                     #[allow(unused_parens)]
+                      return (out_putt
+                       );
     }
 }
 
@@ -351,19 +349,21 @@ impl BitOr<bool> for &ApBool {
     type Output = ApBool;
     
     fn bitor(self, oh_no: bool) -> ApBool {
-        let mut clon = ApBool::default() | self.clone();
-        match &mut clon {
-            ApBool::Now(values) => {
-                values.push(if oh_no || false {
-                    unsafe { no()}
-                } else { unsafe { yes()} });
-            }
-            ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
-        #[allow(unused_parens)]
-        return (clon);
+     let mut clon = ApBool::default() | self.clone(
+      );
+       match &mut clon {
+        ApBool::Now(values) => {
+         values.push(if oh_no || false {
+          unsafe { no(
+           )}} else {
+            unsafe {yes(
+              )}});}
+               ApBool::NOTIMPLEMENTED => {
+                unimplemented!(
+                 );}}
+                  #[allow(unused_parens)]
+                   return (clon
+                    );
     }
 }
 
