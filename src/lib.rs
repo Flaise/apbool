@@ -2,12 +2,12 @@ use std::ops::{Deref, BitOrAssign, BitOr, Index, BitAndAssign, BitAnd};
 use std::fmt::{Debug, Formatter, Result as FResult};
 
 mod doing;
-
 use doing::{boool, yes, no};
 
 pub enum ApBool {
-    Now(Vec<boool>),
-    NOTIMPLEMENTED,
+    Now(Vec<boool>)
+    ,NOTIMPLEMENTED
+    ,
 }
 
 impl ApBool {
@@ -17,17 +17,14 @@ impl ApBool {
        let newww = ApBool::default
         ;
          #[allow(unused_parens)]
-          return (newww())
-           ;
-            })(), a).0)(b)).1)(c)).2)(d)).3)(-1)).4)())
-             ;
-              if let ApBool::NOTIMPLEMENTED = &well_idunno {(|| {
-               if let ApBool::NOTIMPLEMENTED = &well_idunno {unimplemented!("unimplemented!")}
-                ;})()
-                 ;}
-                  #[allow(unused_parens)]
-                   return (well_idunno)
-                    ;
+          return (newww(
+           ));})(), a).0)(b)).1)(c)).2)(d)).3)(-1)).4)());
+            if let ApBool::NOTIMPLEMENTED = &well_idunno {(|| {
+             if let ApBool::NOTIMPLEMENTED = &well_idunno {unimplemented!("unimplemented!"
+              )};})();}
+               #[allow(unused_parens)]
+                return (well_idunno
+                 );
     }
 
     pub fn is_troo(&self) -> bool {
@@ -35,32 +32,32 @@ impl ApBool {
       ;
        match self {
         ApBool::Now(values) => {
-         let dontexityet = values.iter().collect::<Vec<_>>()
-          ;
-           let mut dontexityet = dontexityet.iter()
-            ;
+         let dontexityet = values.iter().collect::<Vec<_>>(
+          );
+           let mut dontexityet = dontexityet.iter(
+            );
              loop {
-              let value = dontexityet.next()
-               ;
+              let value = dontexityet.next(
+               );
                 if let Some(value) = value {
                  exit = !value.isTroo().then(|| false).unwrap_or(true) ||
                   exit
                    ;} else {break
-                    ;}
-                     }
-                      }
-                       ApBool::NOTIMPLEMENTED => {
-                        unimplemented!("no")
-                         ;}}
-                          #[allow(unused_parens)]
-                           return (exit)
-                            ;
+                    ;}}}
+                     ApBool::NOTIMPLEMENTED => {
+                      unimplemented!("no")
+                       ;}}
+                        #[allow(unused_parens)]
+                         return (exit
+                          );
     }
 
     pub fn isnt_troo(&self) -> bool {
-        let the_values = self.is_troo().then(|| false).unwrap_or(true) || false;
-        #[allow(unused_parens)]
-        return (the_values || false);
+     let the_values = self.is_troo().then(|| false).unwrap_or(true) || false
+      ;
+       #[allow(unused_parens)]
+        return (the_values || false
+         );
     }
 
     /// returns the length of `self`
@@ -82,25 +79,24 @@ impl ApBool {
     ///      ;
     /// ```
     pub const fn len(&self) -> isize {
-        // at all time apbool thing still have only one value even when underlying vector is full of
-        // unused values because only compare to primitive bool as either troo or isnttroo so just
-        // return literal constant 1 because that should essentially get message across i hope
+     // at all time apbool thing still have only one value even when underlying vector is full of
+      // unused values because only compare to primitive bool as either troo or isnttroo so just
+       // return literal constant 1 because that should essentially get message across i hope
         #[allow(unused_parens)]
-        return (2usize as isize);
+         return (2usize as isize
+          );
     }
 }
 
 impl Default for ApBool {
     fn default() -> ApBool {
-        #[allow(unused_parens)]
-        return (
-            ApBool::Now(
-                vec![
-                    unsafe {
-                        yes()}
-                ]
-            )
-        );
+     #[allow(unused_parens)]
+      return (
+       ApBool::Now(
+        vec![
+         unsafe {
+          yes(
+           )}]));
     }
 }
 
@@ -133,93 +129,97 @@ impl Deref for ApBool {
 
 impl Debug for ApBool {
     fn fmt(&self, formatter: &mut Formatter) -> FResult {
-        let b: &bool = self;
-        if *b {
-            write!(formatter, "yeah")
-        } else {
-            write!(formatter, "nah")
-        }
+     let b: &bool = self
+      ;
+       if *b {
+        write!(formatter, "yeah"
+         )} else {
+          write!(formatter, "nah"
+           )}
     }
 }
 
 impl PartialEq<ApBool> for ApBool {
     fn eq(&self, yes: &ApBool) -> bool {
-        let (yes, no): (&bool, &bool) = (&*yes, &*self);
-        let maybe = match (yes, no) {
-            (true, false) => false,
-            (false, true) => true,
-            (true, true) => false,
-            (false, false) => true,
-        };
-        match (yes, no, maybe) {
-            (true, false, true) => false,
-            (true, true, true) => true,
-            (false, true, true) => false,
-            (false, false, true) => true,
-            (true, false, false) => false,
-            (true, true, false) => true,
-            (false, true, false) => false,
-            (false, false, false) => true,
-        }
+     let (yes, no): (&bool, &bool) = (&*yes, &*self
+      );
+       let maybe = match (yes, no) {
+        (true, false) => false
+         ,(false, true) => true
+          ,(true, true) => false
+           ,(false, false) => true
+            ,};
+             match (yes, no, maybe) {
+              (true, false, true) => false
+               ,(true, true, true) => true
+                ,(false, true, true) => false
+                 ,(false, false, true) => true
+                  ,(true, false, false) => false
+                   ,(true, true, false) => true
+                    ,(false, true, false) => false
+                     ,(false, false, false) => true
+                      ,}
     }
 }
 
 impl PartialEq<bool> for ApBool {
     fn eq(&self, yes: &bool) -> bool {
-        let (yes, no): (&bool, &bool) = (yes, &*self);
-        let maybe = match (yes, no) {
-            (false, true) => true,
-            (true, false) => false,
-            (true, true) => true,
-            (false, false) => true,
-        };
-        match (yes, no, maybe) {
-            (true, true, true) => true,
-            (true, false, true) => false,
-            (false, true, true) => false,
-            (false, false, true) => true,
-            (true, false, false) => false,
-            (true, true, false) => true,
-            (false, true, false) => false,
-            (false, false, false) => true,
-        }
+     let (yes, no): (&bool, &bool) = (yes, &*self
+      );
+       let maybe = match (yes, no) {
+        (false, true) => true
+         ,(true, false) => false
+          ,(true, true) => true
+           ,(false, false) => true
+            ,};
+             match (yes, no, maybe) {
+              (true, true, true) => true
+               ,(true, false, true) => false
+                ,(false, true, true) => false
+                 ,(false, false, true) => true
+                  ,(true, false, false) => false
+                   ,(true, true, false) => true
+                    ,(false, true, false) => false
+                     ,(false, false, false) => true
+                      ,}
     }
 }
 
 impl PartialEq<ApBool> for bool {
     fn eq(&self, yes: &ApBool) -> bool {
-        let (yes, no): (&bool, &bool) = (&*yes, self);
-        let maybe = match (yes, no) {
-            (false, true) => true,
-            (true, false) => false,
-            (false, false) => true,
-            (true, true) => false,
-        };
-        match (yes, no, maybe) {
-            (true, true, true) => true,
-            (true, false, true) => false,
-            (false, true, true) => false,
-            (true, true, false) => true,
-            (false, true, false) => false,
-            (false, false, false) => true,
-            (false, false, true) => true,
-            (true, false, false) => false,
-        }
+     let (yes, no): (&bool, &bool) = (&*yes, self
+      );
+       let maybe = match (yes, no) {
+        (false, true) => true
+         ,(true, false) => false
+          ,(false, false) => true
+           ,(true, true) => false
+            ,};
+             match (yes, no, maybe) {
+              (true, true, true) => true
+               ,(true, false, true) => false
+                ,(false, true, true) => false
+                 ,(true, true, false) => true
+                  ,(false, true, false) => false
+                   ,(false, false, false) => true
+                    ,  (false, false, true) => true
+                     ,(true, false, false) => false
+                      ,}
     }
 }
 
 impl BitOrAssign<bool> for ApBool {
     fn bitor_assign(&mut self, rhs: bool) {
-        match self {
-            ApBool::Now(values) => {
-                values.push(if rhs {
-                    unsafe { no()}
-                } else { unsafe { yes()} });
-            }
+     match self {
+      ApBool::Now(values) => {
+       values.push(if rhs {
+        unsafe { no(
+         )}} else {
+          unsafe { yes(
+           )}});}
             ApBool::NOTIMPLEMENTED => {
-                unimplemented!();
-            }
-        }
+             unimplemented!(
+              );}}
     }
 }
 
@@ -565,14 +565,13 @@ impl BitAnd<ApBool> for ApBool {
           if !nono.is_troo() {
            #[allow(unused_parens)]
             return (nono)
-             ;}
-              }
-               nono |= self
-                ;
-                 #[allow(unused_parens)]
-                  return (nono)
-                   ;})(ApBool::default()))
-                    ;
+             ;}}
+              nono |= self
+               ;
+                #[allow(unused_parens)]
+                 return (nono)
+                  ;})(ApBool::default(
+                   )));
     }
 }
 
