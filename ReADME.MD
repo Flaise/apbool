@@ -58,13 +58,17 @@ cargo.toml:
 main.rs:
 
     use apbool::ApBool;
-    
     fn main() {
-        let mut just = ApBool::default();
-        just |= true;
-        just |= false;
-        just &= ApBool::default() | true;
-        println!("just like a regular boolean, really: {:?}", just);
+     #[allow(unused_parens)]
+      let mut just = (ApBool::default(
+       ));
+        just |= true
+         ;just |= false
+          ;
+           just &= ApBool::default()
+            | true
+             ;println!("just like a regular boolean, really: {:?}", just
+              );
     }
 
 support
