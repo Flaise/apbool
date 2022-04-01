@@ -53,7 +53,7 @@ basic usage
 cargo.toml:
 
     [dependencies]
-    apbool = "0.1.0"
+    apbool = "0.1.999"
     
 main.rs:
 
